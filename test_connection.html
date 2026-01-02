@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Backend Connection Test</title>
+    <style>
+        body { font-family: monospace; padding: 20px; background: #1a1a1a; color: #0f0; }
+        .test { margin: 10px 0; padding: 10px; background: #2a2a2a; border-radius: 5px; }
+        .success { color: #0f0; }
+        .error { color: #f00; }
+        button { padding: 10px 20px; margin: 5px; background: #0f0; color: #000; border: none; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Backend Connection Test</h1>
+    <div id="results"></div>
+    <button onclick="testConnection()">Test Connection</button>
+    
+    <script>
+        async function testConnection() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<div class="test">Testing...</div>';
+            
+            const tests = [
+                { name: 'Health Check', url: 'http://localhost:8000/health' },
+                { name: 'Root Endpoint', url: 'http://localhost:8000/' },
+                { name: 'Status Endpoint', url: 'http://localhost:8000/api/status' }
+            ];
+            
+            let html = '';
+            for (const test of tests) {
+                try {
+                    const response = await fetch(test.url, {
+                        method: 'GET',
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        html += `<div class="test success">✅ ${test.name}: ${JSON.stringify(data)}</div>`;
+                    } else {
+                        html += `<div class="test error">❌ ${test.name}: ${response.status} ${response.statusText}</div>`;
+                    }
+                } catch (error) {
+                    html += `<div class="test error">❌ ${test.name}: ${error.message}</div>`;
+                }
+            }
+            
+            results.innerHTML = html;
+        }
+        
+        // Auto-test on load
+        testConnection();
+    </script>
+</body>
+</html>
+

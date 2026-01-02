@@ -1,0 +1,10 @@
+Backend server is running!
+Process ID: Check with: lsof -ti:8000
+Status: http://localhost:8000/health returns {"status":"healthy"}
+
+To stop the server:
+1. Find the process: lsof -ti:8000
+2. Kill it: kill -9 $(lsof -ti:8000)
+
+Or restart with: ./start_backend.sh
+
