@@ -6,11 +6,30 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+backend.log
 
+# Dependencies
 node_modules
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Build outputs
 dist
 dist-ssr
 *.local
+.env.local
+.env
+
+# Sensitive files
+*.pid
+backend_status.txt
+font.ttf
+final_viral_short.mp4
+temp_processing/
 
 # Editor directories and files
 .vscode/*
